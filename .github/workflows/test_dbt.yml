@@ -1,0 +1,33 @@
+name: dbt CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dbt & DuckDB
+        run: |
+          pip install dbt-duckdb
+
+      - name: Run dbt Seed (Nạp dữ liệu)
+        run: dbt seed --profiles-dir .
+
+      - name: Run dbt Run (Chạy model)
+        run: dbt run --profiles-dir .
+
+      - name: Run dbt Test (Kiểm tra dữ liệu)
+        run: dbt test --profiles-dir .
