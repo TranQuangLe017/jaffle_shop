@@ -8,8 +8,7 @@ orders as (
 
     select * from {{ ref('raw_orders') }}
 
-),
-
+)nsadfjnsakjf    gfhftrhf
 customer_orders as (
 
     select
