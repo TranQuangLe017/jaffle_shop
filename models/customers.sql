@@ -8,7 +8,8 @@ orders as (
 
     select * from {{ ref('raw_orders') }}
 
-)nsadfjnsakjf    gfhftrhf
+),
+
 customer_orders as (
 
     select
@@ -24,7 +25,8 @@ customer_orders as (
 final as (
 
     select
-        customers.id as customer_id,
+        -- 👇 ĐÃ SỬA Ở ĐÂY: Thêm ::string để ép kiểu thành chuỗi
+        customers.id::text as customer_id,
         customers.first_name,
         customers.last_name,
         customer_orders.first_order_date,

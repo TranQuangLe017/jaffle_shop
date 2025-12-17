@@ -2,5 +2,18 @@ jaffle_shop:
   target: dev
   outputs:
     dev:
-      type: duckdb
-      path: 'dbt.duckdb' 
+      type: postgres       # Loại DB
+      host: localhost      # Địa chỉ (Docker đã mở cổng ra localhost)
+      user: dbt_user       # User khai báo trong docker-compose
+      password: password123 # Password khai báo trong docker-compose
+      port: 5432
+      dbname: jaffle_shop_db # Tên DB
+      schema: public       # Schema mặc định
+      threads: 4
+
+#jaffle_shop:
+  #target: dev
+ # outputs:
+   # dev:
+     # type: duckdb
+      #path: 'dbt.duckdb' 

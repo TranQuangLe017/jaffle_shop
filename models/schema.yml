@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: customers
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+          # Kiểm tra kiểu dữ liệu chuỗi
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: text
+
+# --- Đã tách raw_payments xuống mục SEEDS (Dữ liệu thô) ---
+seeds:
+  - name: raw_payments
+    columns:
+      - name: payment_method
+        tests:
+          # Kiểm tra danh sách (Set Check)
+          # Đã sửa lỗi: Thêm dấu cách sau dấu hai chấm của value_set
+          - dbt_expectations.expect_column_values_to_be_in_set:
+              value_set: ['credit_card', 'cash', 'coupon', 'bank_transfer', 'gift_card']
+
+      - name: amount
+        tests:
+          # Kiểm tra khoảng giá trị (Range Check)
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 1
